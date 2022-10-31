@@ -1,0 +1,22 @@
+.App {
+	display: flex;
+	flex-direction: column;
+	height: 90vh;
+	width: 20rem;
+	margin: 1rem auto;
+	background-color: white;
+	justify-content: space-between;
+
+	&__title {
+		margin: 0;
+		padding: 0.2rem 0;
+		text-align: center;
+		font-size: 1.5rem;
+	}
+
+	&__list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+}
