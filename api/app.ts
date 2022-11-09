@@ -1,50 +1,18 @@
-import express from "express";
-import path from "path";
-import log from "morgan";
-import Cors from "cors";
-import http from "http";
+import express, { Application } from "express";
+import router from "./src/routes";
 
-import indexRouter from "./routes/index";
+const app: Application = express();
+const port = 9000;
 
-var app = express();
-
-var port = normalizePort(process.env.PORT || "9000");
-app.set("port", port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-
-function normalizePort(val: string) {
-	var port = parseInt(val, 10);
-
-	if (isNaN(port)) {
-		// named pipe
-		return val;
-	}
-
-	if (port >= 0) {
-		// port number
-		return port;
-	}
-
-	return false;
-}
-
-// view engine setup
-
-app.use(log("dev"));
-app.use(Cors);
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use("/", indexRouter);
+app.use(router);
 
-export default app;
+try {
+	app.listen(port, (): void => {
+		console.log(`Connected successfully on port ${port}`);
+	});
+} catch (error: any) {
+	console.log(`Error occured: ${error.message}`);
+}
