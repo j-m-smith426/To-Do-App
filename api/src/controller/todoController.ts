@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
+import StatusCodes from "http-status-codes";
 import { getAll } from "../db/config";
 
-export const getAllTodo = async () => {
-	return await getAll();
+const { BAD_REQUEST, OK } = StatusCodes;
+
+export const getAllTodo = async (req: Request, res: Response) => {
+	const data = await getAll();
+	return res.status(OK).send(data).end();
 };
 
 export const saveTodo = async (req: Request, res: Response) => {

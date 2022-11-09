@@ -9,7 +9,7 @@ const createConnection = async () => {
 		database: "tododb",
 		// rowsAsArray: true
 	});
-
+	console.log("request made");
 	return connection;
 };
 
@@ -28,6 +28,7 @@ const getAll = async () => {
 	const connection = await createConnection();
 	const [rows, fields] = await connection.execute(`SELECT * FROM todo`);
 	console.log(rows);
+	return rows;
 };
 const saveOne = async (name: string) => {
 	const connection = await createConnection();

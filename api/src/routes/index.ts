@@ -15,7 +15,7 @@ const router = Router();
  * delete
  */
 
-router.get("", getAllTodo);
+router.get("/", getAllTodo);
 router.post("/save", saveTodo);
 router.put("/update", updateTodo);
 router.delete("/{id}", deleteTodo);
