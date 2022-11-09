@@ -6,7 +6,7 @@ const NewItem = () => {
     const [input, setInput] = useState("");
 
     const handelAdd = () => {
-        writeToDo(input);
+        //Fix new item
         setInput("");
 }
 

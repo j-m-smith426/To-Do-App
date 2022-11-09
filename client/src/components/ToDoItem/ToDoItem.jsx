@@ -6,23 +6,19 @@ import "./ToDoItem.scss";
 
 const ToDoItem = (props) => {
     const todo = props.todo;
-    const key = Object.keys(todo)[0];
-    const name = todo[key].name;
+    const key = todo.idtodo;
+    const name = todo.Name;
     
 
   const handleConfirm = () => {
-        todo[key].compleat = true;
-        console.log(todo[key]);
-        updateToDo(todo);
+       //Fix update
   }
   
   const handleDelete = () => {
-    todo[key] = null;
-    console.log(todo[key]);
-    updateToDo(todo);
+    //Fix delete
 }
   return (
-      <li className={`todoItem ${todo[key].compleat && 'completed'}`} key={key}>
+      <li className={`todoItem ${todo.Completed && 'completed'}`} key={key}>
       <h2 className={`todoItem--name ` } >{name}</h2>
           <div className='todoItem__buttons'>
               

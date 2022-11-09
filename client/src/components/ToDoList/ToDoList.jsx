@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import ToDoItem from "../ToDoItem/ToDoItem"
 const ToDoList = () => {
     const todos = useSelector((state) => {
-        console.log(state);
         return state.todos;
       });
   return (
