@@ -1,9 +1,6 @@
 import React from 'react';
-import { useDispatch } from "react-redux";
 
-const AppTitle = () => {
-    const dispatch = useDispatch();
-  
+const AppTitle = () => {  
   
   return (
     <>

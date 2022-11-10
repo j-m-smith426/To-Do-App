@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const initialState = { todos: [] };
@@ -12,7 +12,7 @@ const apiSlice = createApi({
     endpoints: (builder) => ({
         getAllTodo: builder.query({
             query: () => '/',
-            transformResponse: (response, meta, arg) => response.data,
+            // transformResponse: (response, meta, arg) => response.data,
             transformErrorResponse: (response, meta, arg) => response.status,
             providesTags: ['Todo']
         }),
@@ -22,7 +22,7 @@ const apiSlice = createApi({
                 method: 'POST',
                 body: todo,
             }),
-            transformResponse: (response, meta, arg) => response.data,
+            // transformResponse: (response, meta, arg) => response.data,
             transformErrorResponse: (response, meta, arg) => response.status,
             invalidatesTags: ['Todo']
 
@@ -33,17 +33,17 @@ const apiSlice = createApi({
                 method: 'PUT',
                 body: todo,
             }),
-            transformResponse: (response, meta, arg) => response.data,
+            // transformResponse: (response, meta, arg) => response.data,
             transformErrorResponse: (response, meta, arg) => response.status,
             invalidatesTags: ['Todo']
 
         }),
         deleteTodo: builder.mutation({
             query: (todo) => ({
-                url: `/delete/${todo.todoid}`,
+                url: `/${todo.idtodo}`,
                 method: 'DELETE',
             }),
-            transformResponse: (response, meta, arg) => response.data,
+            // transformResponse: (response, meta, arg) => response.data,
             transformErrorResponse: (response, meta, arg) => response.status,
             invalidatesTags: ['Todo']
 
