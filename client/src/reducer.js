@@ -1,9 +1,62 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-export const initialState = {todos: []};
+export const initialState = { todos: [] };
 
-// Implement Slice for api
+
+
+const apiSlice = createApi({
+    reducerPath: 'api',
+    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+    tagTypes: ['Todo'],
+    endpoints: (builder) => ({
+        getAllTodo: builder.query({
+            query: () => '/',
+            transformResponse: (response, meta, arg) => response.data,
+            transformErrorResponse: (response, meta, arg) => response.status,
+            providesTags: ['Todo']
+        }),
+        saveTodo: builder.mutation({
+            query: (todo) => ({
+                url: '/save',
+                method: 'POST',
+                body: todo,
+            }),
+            transformResponse: (response, meta, arg) => response.data,
+            transformErrorResponse: (response, meta, arg) => response.status,
+            invalidatesTags: ['Todo']
+
+        }),
+        updateTodo: builder.mutation({
+            query: (todo) => ({
+                url: '/update',
+                method: 'PUT',
+                body: todo,
+            }),
+            transformResponse: (response, meta, arg) => response.data,
+            transformErrorResponse: (response, meta, arg) => response.status,
+            invalidatesTags: ['Todo']
+
+        }),
+        deleteTodo: builder.mutation({
+            query: (todo) => ({
+                url: `/delete/${todo.todoid}`,
+                method: 'DELETE',
+            }),
+            transformResponse: (response, meta, arg) => response.data,
+            transformErrorResponse: (response, meta, arg) => response.status,
+            invalidatesTags: ['Todo']
+
+        }),
+    })
+    
+})
+
+export const { useGetAllTodoQuery, useDeleteTodoMutation, useSaveTodoMutation, useUpdateTodoMutation } = apiSlice;
 
 export const store = configureStore({
-    reducer
+    reducer: {
+        [apiSlice.reducerPath]: apiSlice.reducer,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 })
