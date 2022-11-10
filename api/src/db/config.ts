@@ -41,7 +41,7 @@ const confirmOne = async (todo: ITodo) => {
 	const connection = await createConnection();
 	const [rows, fields] = await connection.execute(
 		`UPDATE todo SET Completed = true WHERE idtodo = ? AND Name = ?`,
-		[todo.id, todo.name]
+		[todo.idtodo, todo.Name]
 	);
 };
 const deleteOne = async (todoId: number) => {
