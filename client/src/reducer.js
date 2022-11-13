@@ -3,11 +3,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const initialState = { todos: [] };
 
-
+const { REACT_APP_DATABASE_URL } = process.env;
 
 const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+    baseQuery: fetchBaseQuery({ baseUrl: REACT_APP_DATABASE_URL}),
     tagTypes: ['Todo'],
     endpoints: (builder) => ({
         getAllTodo: builder.query({
