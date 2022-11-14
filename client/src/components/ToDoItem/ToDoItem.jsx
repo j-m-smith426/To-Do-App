@@ -1,28 +1,30 @@
-import { set } from 'firebase/database';
 import React from 'react';
-import { updateToDo } from '../../firebase';
+import { useDeleteTodoMutation, useUpdateTodoMutation } from '../../reducer';
 
 import "./ToDoItem.scss";
 
 const ToDoItem = (props) => {
+  const [update, updateRes] = useUpdateTodoMutation();
+  const [deleteTodo, deleteRes] = useDeleteTodoMutation();
     const todo = props.todo;
-    const key = Object.keys(todo)[0];
-    const name = todo[key].name;
+    const key = todo.idtodo;
+    const name = todo.Name;
     
 
   const handleConfirm = () => {
-        todo[key].compleat = true;
-        console.log(todo[key]);
-        updateToDo(todo);
+    const updatedTodo = {
+      ...todo,
+      Completed: true
+    }
+    
+    update({ todo: updatedTodo });
   }
   
   const handleDelete = () => {
-    todo[key] = null;
-    console.log(todo[key]);
-    updateToDo(todo);
+    deleteTodo(todo);
 }
   return (
-      <li className={`todoItem ${todo[key].compleat && 'completed'}`} key={key}>
+      <li className={`todoItem ${todo.Completed && 'completed'}`} key={key}>
       <h2 className={`todoItem--name ` } >{name}</h2>
           <div className='todoItem__buttons'>
               

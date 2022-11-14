@@ -1,15 +1,16 @@
-import mysql, { RowDataPacket } from "mysql2/promise";
+import mysql from "mysql2/promise";
 import { ITable, ITodo } from "../models/models";
+import Dotenv from "dotenv";
 
+Dotenv.config();
 const createConnection = async () => {
+	const { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } = process.env;
 	const connection = await mysql.createConnection({
-		host: "localhost",
-		user: "root",
-		password: "11J03s22$",
-		database: "tododb",
-		// rowsAsArray: true
+		host: DB_HOST,
+		user: DB_USER,
+		password: DB_PASSWORD,
+		database: DB_DATABASE,
 	});
-
 	return connection;
 };
 
@@ -23,11 +24,14 @@ const sync = async () => {
 	if (rows[0]["COUNT(TABLE_NAME)"] === 1) return true;
 	else return false;
 };
-sync();
+if (!sync()) {
+	throw new Error("Table Not Created");
+}
 const getAll = async () => {
 	const connection = await createConnection();
 	const [rows, fields] = await connection.execute(`SELECT * FROM todo`);
 	console.log(rows);
+	return rows;
 };
 const saveOne = async (name: string) => {
 	const connection = await createConnection();
@@ -40,7 +44,7 @@ const confirmOne = async (todo: ITodo) => {
 	const connection = await createConnection();
 	const [rows, fields] = await connection.execute(
 		`UPDATE todo SET Completed = true WHERE idtodo = ? AND Name = ?`,
-		[todo.id, todo.name]
+		[todo.idtodo, todo.Name]
 	);
 };
 const deleteOne = async (todoId: number) => {

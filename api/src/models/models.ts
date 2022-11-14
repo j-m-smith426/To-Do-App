@@ -5,7 +5,7 @@ export interface ITable extends RowDataPacket {
 }
 
 export interface ITodo {
-	id?: number;
-	name: string;
-	completed: boolean;
+	idtodo?: number;
+	Name: string;
+	Completed: boolean;
 }

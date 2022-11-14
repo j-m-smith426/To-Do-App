@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { writeToDo } from '../../firebase';
+import { useSaveTodoMutation } from '../../reducer';
 import "./NewItem.scss"
 
 const NewItem = () => {
     const [input, setInput] = useState("");
-
+  const [save, result] = useSaveTodoMutation();
     const handelAdd = () => {
-        writeToDo(input);
+      const todo = {
+          todo: input
+      }
+      
+      save(todo);
         setInput("");
 }
 
@@ -14,7 +18,7 @@ const NewItem = () => {
     <div className='NewItem'>
           <label htmlFor="input" className='NewItem__label'>New TODO:</label>
           <input className='NewItem__input' type="text" name='input' value={input} onChange={(e) => setInput(e.target.value)} />
-          <button className='NewItem__button' onClick={handelAdd}>Add</button>
+          <button className='NewItem__button' onClick={() => handelAdd()}>Add</button>
     </div>
   );
 }
